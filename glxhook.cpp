@@ -66,6 +66,12 @@ Proc glXGetProcAddress(const GLubyte* procName)
     if(name == "my glClear")
         return (Proc)handle((const GLubyte*)"glClear");
 
+    if(name == "glXSwapBuffers")
+        return (Proc)glXSwapBuffers;
+
+    if(name == "my glXSwapBuffers")
+        return (Proc)handle((const GLubyte*)"glXSwapBuffers");
+
     return (Proc)handle(procName);
 }
 
