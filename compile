@@ -1,0 +1,4 @@
+#!/bin/bash
+gcc -c -fPIC -fvisibility=hidden elfhacks.c
+g++ -Wall -Wextra -pedantic -fPIC -shared glxhook.cpp elfhacks.o -o glxhook.so
+rm elfhacks.o
