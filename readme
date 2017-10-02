@@ -1,5 +1,5 @@
 $ ./compile
-$ source source_ld_preload
+$ source ld_preload
 
 run OpenGL program
 
