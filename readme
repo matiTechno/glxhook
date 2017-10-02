@@ -1,0 +1,3 @@
+./compile
+source source_ld_preload
+run OpenGL program
