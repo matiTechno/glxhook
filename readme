@@ -2,3 +2,5 @@ $ ./compile
 $ source source_ld_preload
 
 run OpenGL program
+
+todo: remove code duplication

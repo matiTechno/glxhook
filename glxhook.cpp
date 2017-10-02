@@ -69,6 +69,36 @@ Proc glXGetProcAddress(const GLubyte* procName)
     return (Proc)handle(procName);
 }
 
+// SDL2 support
+
+Proc glXGetProcAddressARB(const GLubyte* procName)
+{
+    std::cout << "glXGetProcAddressARB hook" << std::endl;
+
+    using F = void*(*)(const GLubyte*);
+
+    static F handle = nullptr;
+
+    if(!handle)
+        handle = (F)dlsym(RTLD_NEXT, "my glXGetProcAddressARB");
+
+    std::string name((const char*)procName);
+
+    if(name == "glClear")
+        return (Proc)glClear;
+
+    if(name == "my glClear")
+        return (Proc)handle((const GLubyte*)"glClear");
+
+    if(name == "glXSwapBuffers")
+        return (Proc)glXSwapBuffers;
+
+    if(name == "my glXSwapBuffers")
+        return (Proc)handle((const GLubyte*)"glXSwapBuffers");
+
+    return (Proc)handle(procName);
+}
+
 void* dlsym(void* argHandle, const char* symbol)
 {
     using F = void*(*)(void*, const char*);
@@ -102,6 +132,12 @@ void* dlsym(void* argHandle, const char* symbol)
 
     if(name == "my glXGetProcAddress")
         return (void*)handle(argHandle, "glXGetProcAddress");
+
+    if(name == "glXGetProcAddressARB")
+        return (void*)glXGetProcAddressARB;
+
+    if(name == "my glXGetProcAddressARB")
+        return (void*)handle(argHandle, "glXGetProcAddressARB");
 
     if(name == "glXSwapBuffers")
         return (void*)glXSwapBuffers;
